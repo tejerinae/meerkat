@@ -43,8 +43,35 @@ require_once("menu.php");?>
 						panelHeight:'auto'
 				" required="true">
 			</div>
-		
-		<div class="fitem">
+		</form>
+	</div>
+	<div id="dlg-buttons">
+		<a href="#" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveArea();" style="width:90px">Guardar</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('.red').remove();$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
+	</div>
+	<div id="dlgEdit" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+			closed="true" buttons="#dlgEdit-buttons">
+		<div class="ftitle">Informacion del Puesto</div>
+		<form id="fmEd" method="post" novalidate>
+			<div class="fitem" hidden>
+				<label>Codigo:</label>			
+				<input name="cod_puesto" class="easyui-textbox">
+			</div>
+			<div class="fitem">
+				<label>Descripcion:</label>
+				<input name="desc_puesto" class="easyui-textbox" required="true">
+			</div>
+			<div class="fitem">
+				<label>Depto:</label>
+				<input class="easyui-combobox" name="depto"
+					data-options="
+						url:'modules/deptos/get_deptos_hab.php',
+						valueField:'cod_depto',
+						textField:'desc_depto',
+						panelHeight:'auto'
+				" required="true">
+			</div>
+			<div class="fitem">
 				<label>Estado:</label>
 				<input class="easyui-combobox" name="estado"
 					data-options="
@@ -56,9 +83,9 @@ require_once("menu.php");?>
 			</div>	
 		</form>
 	</div>
-	<div id="dlg-buttons">
-		<a href="#" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveArea();" style="width:90px">Guardar</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('.red').remove();$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
+	<div id="dlgEdit-buttons">
+		<a href="#" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveEArea();" style="width:90px">Guardar</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('.red').remove();$('#dlgEdit').dialog('close')" style="width:90px">Cancelar</a>
 	</div>
 	<script type="text/javascript">
 		var url;
@@ -92,6 +119,28 @@ require_once("menu.php");?>
 						});
 					} else {
 						$('#dlg').dialog('close');		// close the dialog
+						$('#dg').datagrid('reload');	// reload the user data
+					}
+				}
+            });
+            }catch(e){console.log(e.message())}
+		}
+	
+		function saveEArea(){
+            try{
+			$('#fmEd').form('submit',{
+				url: url,
+                onSubmit: function(){
+                	if(!validate($(this))) return false;
+				},
+				success: function(result){
+					if (result.errorMsg){
+						$.messager.show({
+							title: 'Error',
+							msg: result.errorMsg
+						});
+					} else {
+						$('#dlgEdit').dialog('close');		// close the dialog
 						$('#dg').datagrid('reload');	// reload the user data
 					}
 				}

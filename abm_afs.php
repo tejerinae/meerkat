@@ -543,6 +543,7 @@ require_once("menu.php");?>
 				$('#toolbar').find('.new').attr('onclick', 'newAf()');
 				$('#toolbar').find('.detail').attr('onclick', 'verAf()');
 				$('#toolbar').find('.asignar').attr('onclick', 'asignar()');
+				$('#toolbar').find('.baja').attr('onclick', 'darBaja()');
 				$('#toolbar').find('.service').attr('onclick', 'service()');
 				$('#toolbar').find('.deposito').attr('onclick', 'enviarDeposito()');
 		    	$('#toolbar').find('a').css('cursor', 'pointer');

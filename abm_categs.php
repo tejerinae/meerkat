@@ -79,25 +79,25 @@ require_once("menu.php");?>
 			
 			<div class="fitem">
 				<label>Tipo de Categoría:</label>
-				<input class="easyui-combobox" name="tipo" id="tipo"
+				<input class="easyui-combobox" name="tipo" id="tipoE"
 					data-options="
 						url:'modules/tipos_categ/get_tipos_categ_hab.php',
 						valueField:'cod_tipo',
 						textField:'desc_tipo',
 						panelHeight:'auto',
 						onSelect:function(row){
-								habilitar(row)}
+								habilitarE(row)}
 				" required="true">
 			</div>
 						
 		<div class="fitem">
 				<label>Punto de Pedido:</label>
-				<input id="ptopedido_categ" name="ptopedido_categ" class="easyui-textbox" required="true" >
+				<input id="ptopedido_categE" name="ptopedido_categ" class="easyui-textbox" required="true" readonly="true" >
 			</div>
 		
 		<div class="fitem">
 			<label>Vida útil:</label>
-			<input id="vidautil_categ" name="vidautil_categ" class="easyui-textbox" required="true">
+			<input id="vidautil_categE" name="vidautil_categ" class="easyui-textbox" required="true" readonly="true">
 		</div>
 					
 		<div class="fitem">
@@ -146,6 +146,21 @@ require_once("menu.php");?>
 				$('#vidautil_categ').textbox('clear');			
 				$('#ptopedido_categ').textbox('readonly',true);
 				$('#ptopedido_categ').textbox('setValue','0');
+			}
+		}
+		function habilitarE(row){
+			tipo = $('#tipoE').combobox('getValue');
+			//if(row.cod_tipo == 2){
+			if(tipo==2 || row.cod_tipo == 2){
+				$('#vidautil_categE').textbox('readonly',true);
+				$('#vidautil_categE').textbox('setValue','0');
+				$('#ptopedido_categE').textbox('readonly',false);
+				$('#ptopedido_categE').textbox('clear');
+			}else { 
+				$('#vidautil_categE').textbox('readonly',false);
+				$('#vidautil_categE').textbox('clear');			
+				$('#ptopedido_categE').textbox('readonly',true);
+				$('#ptopedido_categE').textbox('setValue','0');
 			}
 		}
 		
@@ -197,7 +212,19 @@ require_once("menu.php");?>
 		    onClickRow: function(index,row){
 		    	$('#toolbar').find('.edit').attr('onclick', 'editArea()');
 		    	$('#toolbar').find('a').css('cursor', 'pointer');
-		    	$('#toolbar').find('a').css('opacity', 1);               
+		    	$('#toolbar').find('a').css('opacity', 1);  
+
+		    	if(row.cod_tipo == 2){
+					$('#vidautil_categE').textbox('readonly',true);
+					$('#vidautil_categE').textbox('setValue','0');
+					$('#ptopedido_categE').textbox('readonly',false);
+					$('#ptopedido_categE').textbox('clear');
+				}else { 
+					$('#vidautil_categE').textbox('readonly',false);
+					$('#vidautil_categE').textbox('clear');			
+					$('#ptopedido_categE').textbox('readonly',true);
+					$('#ptopedido_categE').textbox('setValue','0');
+				}             
 		    }
 		});
 		$(document).ready(function() {

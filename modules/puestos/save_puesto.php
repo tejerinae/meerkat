@@ -6,7 +6,7 @@ $cod_estado = htmlspecialchars($_REQUEST['estado']);
 
 include '../../include/conectar.php';
 
-$sql = "insert into puestos(desc_puesto,cod_depto,cod_estado) values('$desc_puesto','$cod_depto','$cod_estado')";
+$sql = "insert into puestos(desc_puesto,cod_depto,cod_estado) values('$desc_puesto','$cod_depto','1')";
 
 $result = @mysql_query($sql);
 if ($result){
